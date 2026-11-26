@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contatos PCTO Rovigo</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Inter", -apple-system, system-ui, "Segoe UI", Arial, sans-serif; margin: 0; background: linear-gradient(180deg, #eef2ff 0%, #f7f8fc 260px); color: #1f2333; min-height: 100vh; }
+  .wrap { max-width: 720px; margin: auto; padding: 22px 16px 60px; }
+  header { margin-bottom: 18px; }
+  h1 { font-size: 24px; margin: 0; letter-spacing: -.3px; }
+  .sub { color: #6b7088; font-size: 14px; margin-top: 4px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+  .stat { background: #fff; border-radius: 14px; padding: 12px; text-align: center; box-shadow: 0 2px 8px rgba(40,50,90,.06); }
+  .stat b { display: block; font-size: 22px; }
+  .stat span { font-size: 12px; color: #6b7088; }
+  .barra { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  button { font: inherit; font-size: 14px; padding: 8px 14px; border-radius: 10px; border: 1px solid #dde1ee; background: #fff; color: #1f2333; cursor: pointer; transition: .15s; }
+  button:hover { background: #f1f3fa; }
+  button.prim { background: #4f46e5; color: #fff; border-color: #4f46e5; box-shadow: 0 3px 10px rgba(79,70,229,.25); }
+  button.prim:hover { background: #4338ca; }
+  button.perigo { color: #c2264b; }
+  .card { background: #fff; border-radius: 16px; padding: 14px 16px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(40,50,90,.07); border-left: 5px solid #cfd3e0; transition: .15s; }
+  .card:hover { box-shadow: 0 6px 18px rgba(40,50,90,.11); }
+  .card.feito { background: #fafbfd; }
+  .card.feito .nome { color: #6b7088; }
+  .card.c-ligar { border-left-color: #f59e0b; }
+  .card.c-auto { border-left-color: #eab308; }
+  .card.c-enc { border-left-color: #3b82f6; }
+  .card.c-ok { border-left-color: #22c55e; }
+  .card.c-nao { border-left-color: #ef4444; }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .nome { font-weight: 650; font-size: 16px; line-height: 1.3; }
+  .badge { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; background: #eef0f5; color: #5a5f73; }
+  .b-ligar { background: #fff1db; color: #a35a00; }
+  .b-auto { background: #fef7c3; color: #7a6200; }
+  .b-enc { background: #dbe8ff; color: #1e4fae; }
+  .b-ok { background: #d8f5df; color: #17703a; }
+  .b-nao { background: #ffe0e3; color: #a5192f; }
+  .info { margin-top: 8px; font-size: 14px; line-height: 1.7; }
+  .info a { color: #4f46e5; text-decoration: none; font-weight: 500; }
+  .chip { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 6px; background: #eef0f5; color: #5a5f73; }
+  .chip.sim { background: #d8f5df; color: #17703a; }
+  .obs { color: #5a5f73; font-size: 13px; margin-top: 8px; padding: 8px 10px; background: #f6f7fb; border-radius: 10px; white-space: pre-wrap; }
+  .acoes { margin-top: 10px; display: flex; gap: 6px; }
+  .acoes button { font-size: 13px; padding: 5px 12px; }
+  .form-card { border-left-color: #4f46e5; }
+  form { display: grid; gap: 10px; }
+  form label { font-size: 13px; color: #5a5f73; display: grid; gap: 4px; font-weight: 500; }
+  input, select, textarea { font: inherit; font-size: 15px; padding: 9px 11px; border: 1px solid #dde1ee; border-radius: 10px; background: #fff; color: #1f2333; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid #c7c4fb; border-color: #4f46e5; }
+  textarea { min-height: 70px; resize: vertical; }
+  .linha { display: flex; gap: 10px; }
+  .linha > * { flex: 1; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  #tema { font-size: 18px; padding: 6px 10px; flex-shrink: 0; }
+
+  /* Tema escuro */
+  [data-tema="escuro"] body { background: linear-gradient(180deg, #1b1d33 0%, #111220 260px); color: #e6e8f2; }
+  [data-tema="escuro"] .sub, [data-tema="escuro"] .stat span { color: #9a9fb8; }
+  [data-tema="escuro"] .stat, [data-tema="escuro"] .card { background: #1d1f31; box-shadow: 0 2px 10px rgba(0,0,0,.35); }
+  [data-tema="escuro"] .card { border-left-color: #3a3d55; }
+  [data-tema="escuro"] .card.c-ligar { border-left-color: #f59e0b; }
+  [data-tema="escuro"] .card.c-auto { border-left-color: #eab308; }
+  [data-tema="escuro"] .card.c-enc { border-left-color: #3b82f6; }
+  [data-tema="escuro"] .card.c-ok { border-left-color: #22c55e; }
+  [data-tema="escuro"] .card.c-nao { border-left-color: #ef4444; }
+  [data-tema="escuro"] .form-card { border-left-color: #818cf8; }
+  [data-tema="escuro"] .card.feito { background: #181a2a; }
+  [data-tema="escuro"] .card.feito .nome { color: #9a9fb8; }
+  [data-tema="escuro"] button { background: #24273d; border-color: #363a55; color: #e6e8f2; }
+  [data-tema="escuro"] button:hover { background: #2d3150; }
+  [data-tema="escuro"] button.prim { background: #6366f1; border-color: #6366f1; color: #fff; }
+  [data-tema="escuro"] button.perigo { color: #ff7a93; }
+  [data-tema="escuro"] .info a { color: #a5b4fc; }
+  [data-tema="escuro"] .obs { background: #24273d; color: #b7bbd0; }
+  [data-tema="escuro"] .badge, [data-tema="escuro"] .chip { background: #2b2e45; color: #b7bbd0; }
+  [data-tema="escuro"] .b-ligar { background: #4a3210; color: #ffc46b; }
+  [data-tema="escuro"] .b-auto { background: #46400f; color: #f5dc5a; }
+  [data-tema="escuro"] .b-enc { background: #1b3260; color: #9cc0ff; }
+  [data-tema="escuro"] .b-ok, [data-tema="escuro"] .chip.sim { background: #163d24; color: #7fe0a0; }
+  [data-tema="escuro"] .b-nao { background: #4a1820; color: #ff9aaa; }
+  [data-tema="escuro"] form label { color: #9a9fb8; }
+  [data-tema="escuro"] input, [data-tema="escuro"] select, [data-tema="escuro"] textarea { background: #161829; border-color: #363a55; color: #e6e8f2; }
+  [data-tema="escuro"] input:focus, [data-tema="escuro"] select:focus, [data-tema="escuro"] textarea:focus { outline-color: #4b4f8a; border-color: #818cf8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>📋 Contatos PCTO – Rovigo</h1>
+    <div class="sub">Lugares para o estágio de verão · toque no telefone para ligar</div>
+  </div>
+  <button id="tema" title="Trocar tema">🌙</button>
+</header>
+<div class="stats">
+  <div class="stat"><b id="s-total">0</b><span>contatos</span></div>
+  <div class="stat"><b id="s-lig">0</b><span>já liguei</span></div>
+  <div class="stat"><b id="s-rel">0</b><span>ligar de novo</span></div>
+</div>
+<div class="barra">
+  <button class="prim" id="novo">+ Adicionar contato</button>
+  <button id="exportar">Baixar backup</button>
+  <button id="importarBtn">Restaurar backup</button>
+  <input type="file" id="importar" accept=".json" hidden>
+</div>
+<div id="form-area"></div>
+<div id="lista"></div>
+</div>
+
+<script>
+const RESPOSTAS = {
+  "Sem resposta": "",
+  "Não atendeu – ligar de novo": "b-ligar",
+  "Resposta automática": "b-auto",
+  "Encaminhado": "b-enc",
+  "Vaga confirmada": "b-ok",
+  "Recusado": "b-nao"
+};
+
+const INICIAIS = [
+  ["CREA Rovigo","+39 0425 360113","Sim","ci@crea.gov.it","Não atendeu – ligar de novo","Caixa postal (26/11). Ligar sexta 9h–12h30 e pedir pela Dra. Ilaria Alberti"],
+  ["Casa di Cura Città di Rovigo","+39 0425 426111","Não","info@cittadirovigo.it","Sem resposta","Pedir pelo Laboratorio Analisi"],
+  ["Ordine dei Farmacisti","+39 0425 23903","Sim","info@ordinefarmacistirovigo.it","Não atendeu – ligar de novo","Pedir farmácias com laboratório galênico"],
+  ["Camera di Commercio","+39 0425 426411","Sim","urp@dl.camcom.it","Não atendeu – ligar de novo","E-mail encaminhado ao setor scuola-lavoro (scuolalavoro@dl.camcom.it)"],
+  ["Provincia di Rovigo","+39 0425 386111","Não","ufficio.urp@provincia.rovigo.it","Sem resposta",""],
+  ["ULSS 5 Polesana (URP)","+39 0425 394151","Sim","urp.ro@aulss5.veneto.it","Não atendeu – ligar de novo","Resposta automática: usar formulário gerus.aulss5.veneto.it/forms/informazioni"],
+  ["Consorzio Università Rovigo","+39 0425 398502","Não","segreteriaportaadige@cur-rovigo.it","Sem resposta",""],
+  ["Ecoambiente","+39 0425 28878","Não","info@ecoambienterovigo.it","Sem resposta","Contato: Cristina Satta"],
+  ["Tecnologica group","+39 0425 475453","Não","info@tecnologicagroup.com","Sem resposta",""],
+  ["Regione – Caccia e Pesca Rovigo","+39 0425 397484","Não","cacciapesca.rovigo@regione.veneto.it","Sem resposta","Outro número: 0425 397481"],
+  ["t2i Rovigo","+39 0425 471067","Não","info.rovigo@t2i.it","Sem resposta",""],
+  ["Centro di Medicina Rovigo","+39 0425 423573","Não","","Sem resposta","Aberto até 20h"],
+  ["ARPAV","+39 049 823 9301","Sim","formazione.interna@arpa.veneto.it","Sem resposta","Já ligou antes; e-mail enviado depois"],
+  ["Lab Control","+39 0425 176115","Sim","laboratorio@lab-control.it","Sem resposta","Já ligou antes; e-mail enviado depois"],
+  ["Poliambulatorio Sant'Anna (Lendinara)","+39 0425 641490","Sim","amministrazione@poliambulatoriosantanna.it","Sem resposta","Fica em Lendinara"],
+  ["ULSS 5 Polesana (central)","+39 0425 3931","Sim","","Sem resposta","Já ligou antes na central"],
+  ["C.S.T.A. (Salara)","+39 0425 705403","Sim","","Sem resposta",""],
+  ["Bianalisi – Centro Medico Rovigo","+39 0425 098300","Sim","","Sem resposta",""],
+  ["Farmastudio – Fast S.r.l.","+39 0425 411667","Sim","","Sem resposta",""],
+  ["PoPlab S.r.l.","+39 049 806 1111","Sim","","Sem resposta",""]
+].map(([nome, tel, ligou, email, resposta, obs]) => ({ nome, tel, ligou, email, resposta, obs }));
+
+const CHAVE = "pcto-contatos";
+let contatos;
+try { contatos = JSON.parse(localStorage.getItem(CHAVE)); } catch (e) {}
+if (!Array.isArray(contatos)) contatos = INICIAIS;
+
+function salvar() {
+  try { localStorage.setItem(CHAVE, JSON.stringify(contatos)); } catch (e) {}
+}
+
+function esc(t) {
+  return String(t || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function desenhar() {
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
+  contatos.forEach((c, i) => {
+    const card = document.createElement("div");
+    const cor = (RESPOSTAS[c.resposta] || "").replace("b-", "c-");
+    card.className = "card " + cor + (c.ligou === "Sim" ? " feito" : "");
+    card.innerHTML = `
+      <div class="top"><span class="nome">${i + 1}. ${esc(c.nome)}</span>
+        <span class="badge ${RESPOSTAS[c.resposta] || ""}">${esc(c.resposta)}</span></div>
+      <div class="info">
+        ${c.tel ? `📞 <a href="tel:${esc(c.tel.replace(/\s/g, ""))}">${esc(c.tel)}</a><br>` : ""}
+        ${c.email ? `✉️ <a href="mailto:${esc(c.email)}">${esc(c.email)}</a><br>` : ""}
+        <span class="chip ${c.ligou === "Sim" ? "sim" : ""}">${c.ligou === "Sim" ? "✓ Já liguei" : "Ainda não liguei"}</span>
+      </div>
+      ${c.obs ? `<div class="obs">${esc(c.obs)}</div>` : ""}
+      <div class="acoes"><button data-ed="${i}">Editar</button><button class="perigo" data-del="${i}">Apagar</button></div>`;
+    lista.appendChild(card);
+  });
+  document.getElementById("s-total").textContent = contatos.length;
+  document.getElementById("s-lig").textContent = contatos.filter(c => c.ligou === "Sim").length;
+  document.getElementById("s-rel").textContent = contatos.filter(c => c.resposta === "Não atendeu – ligar de novo").length;
+  lista.querySelectorAll("[data-ed]").forEach(b => b.onclick = () => abrirForm(+b.dataset.ed));
+  lista.querySelectorAll("[data-del]").forEach(b => b.onclick = () => {
+    if (confirm("Apagar " + contatos[+b.dataset.del].nome + "?")) {
+      contatos.splice(+b.dataset.del, 1); salvar(); desenhar();
+    }
+  });
+}
+
+function abrirForm(i) {
+  const c = i === null ? { nome: "", tel: "", ligou: "Não", email: "", resposta: "Sem resposta", obs: "" } : contatos[i];
+  const area = document.getElementById("form-area");
+  area.innerHTML = `
+    <div class="card form-card"><form id="f">
+      <label>Nome do lugar<input name="nome" required value="${esc(c.nome)}"></label>
+      <label>Telefone<input name="tel" type="tel" value="${esc(c.tel)}"></label>
+      <label>E-mail<input name="email" type="email" value="${esc(c.email)}"></label>
+      <div class="linha">
+        <label>Já liguei?<select name="ligou">
+          <option ${c.ligou === "Sim" ? "selected" : ""}>Sim</option>
+          <option ${c.ligou !== "Sim" ? "selected" : ""}>Não</option></select></label>
+        <label>Resposta<select name="resposta">
+          ${Object.keys(RESPOSTAS).map(r => `<option ${r === c.resposta ? "selected" : ""}>${r}</option>`).join("")}
+        </select></label>
+      </div>
+      <label>Observação<textarea name="obs">${esc(c.obs)}</textarea></label>
+      <div class="linha"><button class="prim" type="submit">Salvar</button><button type="button" id="cancelar">Cancelar</button></div>
+    </form></div>`;
+  area.scrollIntoView({ behavior: "smooth" });
+  document.getElementById("cancelar").onclick = () => area.innerHTML = "";
+  document.getElementById("f").onsubmit = e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(e.target));
+    if (i === null) contatos.push(d); else contatos[i] = d;
+    salvar(); area.innerHTML = ""; desenhar();
+  };
+}
+
+document.getElementById("novo").onclick = () => abrirForm(null);
+
+document.getElementById("exportar").onclick = () => {
+  const blob = new Blob([JSON.stringify(contatos, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "contatos-pcto.json";
+  a.click();
+};
+document.getElementById("importarBtn").onclick = () => document.getElementById("importar").click();
+document.getElementById("importar").onchange = e => {
+  const arq = e.target.files[0];
+  if (!arq) return;
+  arq.text().then(t => {
+    try {
+      const dados = JSON.parse(t);
+      if (Array.isArray(dados)) { contatos = dados; salvar(); desenhar(); }
+    } catch (err) { alert("Arquivo inválido"); }
+  });
+};
+
+function aplicarTema(t) {
+  document.documentElement.setAttribute("data-tema", t);
+  document.getElementById("tema").textContent = t === "escuro" ? "☀️" : "🌙";
+}
+let tema;
+try { tema = localStorage.getItem("pcto-tema"); } catch (e) {}
+if (!tema) tema = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+aplicarTema(tema);
+document.getElementById("tema").onclick = () => {
+  tema = tema === "escuro" ? "claro" : "escuro";
+  aplicarTema(tema);
+  try { localStorage.setItem("pcto-tema", tema); } catch (e) {}
+};
+
+desenhar();
+</script>
+</body>
+</html>
